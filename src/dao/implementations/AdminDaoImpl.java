@@ -115,29 +115,29 @@ public class AdminDaoImpl implements AdminDao{
     }
     
     @Override
-    public boolean login(Authenticatable user) {
+    public Administrateur login(Administrateur user) {
         if (user instanceof Administrateur) {
             Administrateur admin = (Administrateur) user;
             try {
                 Administrateur adminFromDB = em.find(Administrateur.class, admin.getId());
                 if (adminFromDB != null && adminFromDB.getPassword().equals(admin.getPassword())) {
-                    return true;  // Authentification réussie
+                    return admin;  // Authentification réussie
                 }
             } catch (Exception e) {
                 throw new RuntimeException("Erreur lors de l'authentification de l'administrateur." + e.getMessage(), e);
             }
         }
-        return false;  // Authentification échouée
+        return null;  // Authentification échouée
     }
 
     @Override
-    public Authenticatable login(String username, String password) {
+    public Administrateur login(String username, String password) {
         try {
             Query query = em.createQuery("SELECT a FROM Administrateur a WHERE a.username = :username", Administrateur.class);
             query.setParameter("username", username);
             Administrateur admin = (Administrateur) query.getSingleResult();
             if (admin != null && admin.getPassword().equals(password)) {
-                return (Authenticatable)admin;  // Authentification réussie
+                return admin;  // Authentification réussie
             }
         } catch (NoResultException e) {
             return null;  // Utilisateur non trouvé
@@ -148,7 +148,7 @@ public class AdminDaoImpl implements AdminDao{
     }
 
     @Override
-    public void register(Authenticatable user) {
+    public void register(Administrateur user) {
         if (user instanceof Administrateur) {
             Administrateur admin = (Administrateur) user;
             try {
@@ -163,7 +163,7 @@ public class AdminDaoImpl implements AdminDao{
     }
 
     @Override
-    public void logout(Authenticatable user) {
+    public void logout(Administrateur user) {
         // Logique de déconnexion de l'administrateur
     }
 }

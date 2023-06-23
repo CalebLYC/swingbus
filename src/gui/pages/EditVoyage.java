@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -39,6 +40,7 @@ import services.interfaces.VoyageService;
  * @author Caleb Lyc
  */
 public class EditVoyage extends JFrame {
+
     private VoyageService service = new VoyageServiceImpl();
     private Voyage voyageToEdit;
     private List<entities.Ligne> lignes;
@@ -52,18 +54,19 @@ public class EditVoyage extends JFrame {
     private Map<Integer, entities.Ligne> ligneMap = new HashMap<>();
     private Map<Integer, entities.Bus> busMap = new HashMap<>();
     private Map<Integer, entities.Personnel> conducMap = new HashMap<>();
-    
 
     public EditVoyage(Voyage voyageT) throws ParseException {
         voyageToEdit = voyageT;
         setTitle("Modifier un voyage");
+        ImageIcon icon = new ImageIcon("assets/img/busImg.jpg");
+        setIconImage(icon.getImage());
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        
+
         AddForm addform = new AddForm();
         ligneComboBox = addform.addFormField("Ligne", new JComboBox<>());
         lignes = new LigneServiceImpl().lister();
@@ -86,8 +89,8 @@ public class EditVoyage extends JFrame {
         conducField = addform.addFormField("Conducteur", new JComboBox());
         conducteurs = new PersonnelServiceImpl().lister();
         for (entities.Personnel con : conducteurs) {
-            if(con.getPoste().getLibelle().equalsIgnoreCase("conducteur")){
-                conducField.addItem(con.getNom() + " " +con.getPrenom());
+            if (con.getPoste().getLibelle().equalsIgnoreCase("conducteur")) {
+                conducField.addItem(con.getNom() + " " + con.getPrenom());
                 conducMap.put(index, con);
                 index++;
             }
@@ -97,9 +100,9 @@ public class EditVoyage extends JFrame {
         versField = addform.addFormField("Direction", new JComboBox());
         versField.addItem("Voyage vers le campus");
         versField.addItem("Voyage vers la périphérie");
-        if(voyageToEdit.isVersPeripherie()){
+        if (voyageToEdit.isVersPeripherie()) {
             versField.setSelectedItem("Voyage vers la périphérie");
-        }else{
+        } else {
             versField.setSelectedItem("Voyage vers le campus");
         }
 
@@ -121,30 +124,30 @@ public class EditVoyage extends JFrame {
                 String bus = (String) busComboBox.getSelectedItem();
                 String conducteur = (String) conducField.getSelectedItem();
                 String date = getFormattedDate();
-                String vers = (String)versField.getSelectedItem();
+                String vers = (String) versField.getSelectedItem();
 
                 // Valider les champs
                 if (ligne.isEmpty() || bus.isEmpty() || conducteur.isEmpty() || date.isEmpty()) {
                     showErrorDialog("Veuillez remplir tous les champs.");
                     return;
                 }
-                
+
                 int ligneId = ligneComboBox.getSelectedIndex();
                 entities.Ligne selectedLigne = ligneMap.get(ligneId);
                 int busId = ligneComboBox.getSelectedIndex();
                 entities.Bus selectedBus = busMap.get(busId);
                 int conduId = ligneComboBox.getSelectedIndex();
                 entities.Personnel selectedCond = conducMap.get(conduId);
-                Date dateV = (Date)dateSpinner.getValue();
+                Date dateV = (Date) dateSpinner.getValue();
                 boolean toPeri = false;
-                if(vers.equalsIgnoreCase("Voyage vers la périphérie")){
+                if (vers.equalsIgnoreCase("Voyage vers la périphérie")) {
                     toPeri = true;
                 }
                 System.out.println(ligneMap);
                 System.out.println(selectedLigne.toString());
                 Voyage voyage = new Voyage(voyageToEdit.getId(), dateV, toPeri, selectedLigne, selectedBus);
                 voyage.getPersonnel().add(selectedCond);
-                service.modifier(voyage); 
+                service.modifier(voyage);
                 JOptionPane.showMessageDialog(EditVoyage.this, "Voyage modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
                 Window.getInstance().changePage(EmploiDuTemps.pageId);

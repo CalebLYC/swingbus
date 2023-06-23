@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,7 +42,10 @@ public class AddLigne extends JFrame {
 
     public AddLigne() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setTitle("Ajouter une ligne");
         setSize(600, 300);
+        ImageIcon icon = new ImageIcon("assets/img/busImg.jpg");
+        setIconImage(icon.getImage());
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 

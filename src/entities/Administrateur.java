@@ -7,14 +7,16 @@ package entities;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Caleb Lyc
  */
+@Entity
 @DiscriminatorValue(value = "ADMIN")
-public class Administrateur extends User{
-    
+public class Administrateur extends User {
+
     @Column(name = "username", length = 255)
     private String username;
     @Column(name = "password", length = 255)
@@ -29,6 +31,18 @@ public class Administrateur extends User{
 
     public Administrateur(String nom, String prenom, Date date_naissance) {
         super(nom, prenom, date_naissance);
+    }
+
+    public Administrateur(String nom, String prenom, Date date_naissance, String username, String password) {
+        super(nom, prenom, date_naissance);
+        this.username = username;
+        this.password = password;
+    }
+
+    public Administrateur(Integer id, String nom, String prenom, Date date_naissance, String username, String password) {
+        super(id, nom, prenom, date_naissance);
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {

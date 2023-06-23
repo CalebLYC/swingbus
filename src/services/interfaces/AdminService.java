@@ -4,6 +4,7 @@
  */
 package services.interfaces;
 
+import dao.interfaces.Authenticatable;
 import entities.Administrateur;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author Caleb Lyc
  */
-public interface AdminService {
+public interface AdminService extends AuthenticatableService{
     public List<Administrateur> lister();
     public void ajouter(Administrateur admin);
     public Administrateur trouver(Integer id);

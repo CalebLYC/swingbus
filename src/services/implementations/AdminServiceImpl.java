@@ -6,7 +6,6 @@ package services.implementations;
 
 import dao.implementations.AdminDaoImpl;
 import dao.interfaces.AdminDao;
-import dao.interfaces.Authenticatable;
 import entities.Administrateur;
 import java.util.List;
 import services.interfaces.AdminService;
@@ -83,7 +82,7 @@ public class AdminServiceImpl implements AdminService, AuthenticatableService{
     }
 
     @Override
-    public boolean login(Authenticatable user) {
+    public Administrateur login(Administrateur user) {
         try{
             return this.dao.login(user);
         } catch(Exception e){
@@ -92,7 +91,7 @@ public class AdminServiceImpl implements AdminService, AuthenticatableService{
     }
 
     @Override
-    public Authenticatable login(String username, String password) {
+    public Administrateur login(String username, String password) {
         try{
             return this.dao.login(username, password);
         } catch(Exception e){
@@ -101,7 +100,7 @@ public class AdminServiceImpl implements AdminService, AuthenticatableService{
     }
 
     @Override
-    public void register(Authenticatable user) {
+    public void register(Administrateur user) {
         try{
             this.dao.register(user);
         } catch(Exception e){
@@ -110,7 +109,7 @@ public class AdminServiceImpl implements AdminService, AuthenticatableService{
     }
 
     @Override
-    public void logout(Authenticatable user) {
+    public void logout(Administrateur user) {
         try{
             this.dao.logout(user);
         } catch(Exception e){

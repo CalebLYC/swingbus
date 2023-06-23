@@ -4,6 +4,7 @@
  */
 package gui.pages;
 
+import entities.Administrateur;
 import gui.Window;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -13,6 +14,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,33 +25,28 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
-import services.implementations.LigneServiceImpl;
-import services.interfaces.LigneService;
+import services.implementations.AdminServiceImpl;
+import services.interfaces.AdminService;
 
 /**
  *
  * @author Caleb Lyc
  */
-public class EditLigne extends JFrame {
+public class Login extends JFrame {
 
     private JPanel contentPanel;
     private JButton addButton;
     private JButton annulerButton;
-    JTextField numeroField;
-    JTextField distField;
-    JTextField nomField;
-    JTextField deparField;
-    JTextField destField;
-    LigneService service = new LigneServiceImpl();
-    private entities.Ligne ligneToEdit;
+    JTextField usernameField;
+    JTextField passwordField;
+    AdminService service = new AdminServiceImpl();
 
-    public EditLigne(entities.Ligne ligne) {
-        ligneToEdit = ligne;
-        setTitle("Modifier une ligne");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(600, 300);
+    public Login() {
+        setTitle("Se connecter");
         ImageIcon icon = new ImageIcon("assets/img/busImg.jpg");
         setIconImage(icon.getImage());
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize(600, 300);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -55,9 +54,9 @@ public class EditLigne extends JFrame {
         contentPanel.setLayout(new GridBagLayout());
         addFields();
 
-        addButton = new JButton("Modifier");
+        addButton = new JButton("Se connecter");
         addButton.setFont(new Font("Arial", Font.BOLD, 14));
-        annulerButton = new JButton("Annuler");
+        annulerButton = new JButton("S'inscrire");
         annulerButton.setFont(new Font("Arial", Font.BOLD, 14));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -74,23 +73,20 @@ public class EditLigne extends JFrame {
             }
         });
         annulerButton.addActionListener(e -> {
-            dispose();
+            try {
+                new Register();
+                dispose();
+            } catch (ParseException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
         setVisible(true);
     }
 
     private void addFields() {
-        numeroField = addFormField("Numéro de la ligne");
-        numeroField.setText("" + ligneToEdit.getNumero());
-        nomField = addFormField("Nom");
-        nomField.setText(ligneToEdit.getNom());
-        deparField = addFormField("Départ");
-        deparField.setText(ligneToEdit.getDepart());
-        destField = addFormField("Destination");
-        destField.setText(ligneToEdit.getDestination());
-        distField = addFormField("Distance");
-        distField.setText("" + ligneToEdit.getDistance());
+        usernameField = addFormField("Nom d'utilisateur");
+        passwordField = addFormField("Mot de passe");
     }
 
     private JTextField addFormField(String label) {
@@ -134,22 +130,22 @@ public class EditLigne extends JFrame {
 
     private void displayDialog() {
         try {
-            Integer numero = Integer.valueOf(numeroField.getText());
-            String nom = nomField.getText();
-            String depart = deparField.getText();
-            String destination = destField.getText();
-            float distance = Float.parseFloat(distField.getText());
-            entities.Ligne ligne = new entities.Ligne(numero, nom, distance, depart, destination);
-            service.modifier(ligne);
-            StringBuilder sb = new StringBuilder();
-            sb.append("Ligne");
-            sb.append(numero);
-            sb.append(": ");
-            sb.append(nom);
-            sb.append(" modifiée avec succès");
-            JOptionPane.showMessageDialog(this, sb.toString(), "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-            Window.getInstance().changePage(Lignes.pageId);
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            Administrateur user = service.login(username, password);
+            if (user != null) {
+                Window.getInstance();
+                StringBuilder sb = new StringBuilder();
+                sb.append("Authentification réussie\n");
+                sb.append("Bienvenue Mr ");
+                sb.append(user.getPrenom()).append(" ").append(user.getNom());
+                sb.append("\nConnecté sous le pseudonyme: ");
+                sb.append(username);
+                JOptionPane.showMessageDialog(this, sb.toString(), "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe invalide", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

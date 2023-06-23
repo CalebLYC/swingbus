@@ -4,15 +4,15 @@
  */
 package dao.interfaces;
 
-import entities.User;
+import entities.Administrateur;
 
 /**
  *
  * @author Caleb Lyc
  */
 public interface Authenticatable {
-    public boolean login(Authenticatable user);
-    public Authenticatable login(String username, String password);
-    public void register(Authenticatable user);
-    public void logout(Authenticatable user);
+    public Administrateur login(Administrateur user);
+    public Administrateur login(String username, String password);
+    public void register(Administrateur user);
+    public void logout(Administrateur user);
 }

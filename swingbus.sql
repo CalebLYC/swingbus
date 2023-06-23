@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2023 at 03:51 AM
+-- Generation Time: Jun 23, 2023 at 04:52 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -110,25 +110,29 @@ CREATE TABLE `users` (
   `date_naissance` datetime(6) DEFAULT NULL,
   `nom` varchar(100) DEFAULT NULL,
   `prenom` varchar(200) DEFAULT NULL,
-  `poste_id` int(11) DEFAULT NULL
+  `poste_id` int(11) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`type`, `id`, `date_naissance`, `nom`, `prenom`, `poste_id`) VALUES
-('PERSO', 6, '1990-01-01 00:00:00.000000', 'Williams', 'David', 3),
-('PERSO', 7, '1990-01-01 00:00:00.000000', 'Smith', 'John', 2),
-('PERSO', 8, '1990-01-01 00:00:00.000000', 'Johnson', 'Michael', 2),
-('PERSO', 9, '1990-01-01 00:00:00.000000', 'Williams', 'William', 2),
-('PERSO', 10, '1990-01-01 00:00:00.000000', 'Brown', 'David', 3),
-('PERSO', 11, '1990-01-01 00:00:00.000000', 'Jones', 'Robert', 3),
-('PERSO', 12, '1990-01-01 00:00:00.000000', 'Miller', 'James', 3),
-('PERSO', 13, '1990-01-01 00:00:00.000000', 'Taylor', 'Christopher', 3),
-('PERSO', 14, '1990-01-01 00:00:00.000000', 'Anderson', 'Daniel', 3),
-('PERSO', 15, '1990-01-01 00:00:00.000000', 'Thomas', 'Matthew', 3),
-('PERSO', 16, '1990-01-01 00:00:00.000000', 'Jackson', 'Joseph', 3);
+INSERT INTO `users` (`type`, `id`, `date_naissance`, `nom`, `prenom`, `poste_id`, `password`, `username`) VALUES
+('PERSO', 6, '1990-01-01 00:00:00.000000', 'Williams', 'David', 3, NULL, NULL),
+('PERSO', 7, '1990-01-01 00:00:00.000000', 'Smith', 'John', 2, NULL, NULL),
+('PERSO', 8, '1990-01-01 00:00:00.000000', 'Johnson', 'Michael', 2, NULL, NULL),
+('PERSO', 9, '1990-01-01 00:00:00.000000', 'Williams', 'William', 2, NULL, NULL),
+('PERSO', 10, '1990-01-01 00:00:00.000000', 'Brown', 'David', 3, NULL, NULL),
+('PERSO', 11, '1990-01-01 00:00:00.000000', 'Jones', 'Robert', 3, NULL, NULL),
+('PERSO', 12, '1990-01-01 00:00:00.000000', 'Miller', 'James', 3, NULL, NULL),
+('PERSO', 13, '1990-01-01 00:00:00.000000', 'Taylor', 'Christopher', 3, NULL, NULL),
+('PERSO', 14, '1990-01-01 00:00:00.000000', 'Anderson', 'Daniel', 3, NULL, NULL),
+('PERSO', 15, '1990-01-01 00:00:00.000000', 'Thomas', 'Matthew', 3, NULL, NULL),
+('PERSO', 16, '1990-01-01 00:00:00.000000', 'Jackson', 'Joseph', 3, NULL, NULL),
+('ADMIN', 17, '2023-06-23 02:31:13.524000', 'lyc', 'caleb', NULL, '1234', 'lyc'),
+('PERSO', 18, '2020-06-23 00:00:00.000000', 'Sparrow', 'Jack', 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -252,7 +256,7 @@ ALTER TABLE `postes`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `voyages`

@@ -4,7 +4,7 @@
  */
 package swingbus;
 
-import gui.Window;
+import gui.pages.Login;
 
 /**
  *
@@ -16,7 +16,7 @@ public class Swingbus {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Window window = Window.getInstance();
+        new Login();
     }
 
 }

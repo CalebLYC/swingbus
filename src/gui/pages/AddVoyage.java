@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -55,6 +56,8 @@ public class AddVoyage extends JFrame {
 
     public AddVoyage() throws ParseException {
         setTitle("Ajouter un voyage");
+        ImageIcon icon = new ImageIcon("assets/img/busImg.jpg");
+        setIconImage(icon.getImage());
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);

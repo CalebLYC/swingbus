@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,8 +26,11 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author Caleb Lyc
  */
 public class Emploi extends JFrame {
+
     public Emploi() {
         setTitle("FICHE HORAIRE DES BUS UL SOTRAL DU 14 MARS 2022");
+        ImageIcon icon = new ImageIcon("assets/img/busImg.jpg");
+        setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(800, 600));
 
@@ -42,28 +46,28 @@ public class Emploi extends JFrame {
 
         String[] columnNames = {"", "L14: AGOE ASSIYEYE", "L17:", "L13: ADETIKOPE", "L15: ZANGUERA", "L16: SEGBE"};
         Object[][] data = {
-                {"", "ADJOLOLO", "B1", "B2", "B3", "B1"},
-                {"Départ", "05:30", "06:00", "Départ", "05:30", "B1"},
-                {"Départ", "B2", "B3", "B1", "B2", "Départ"},
-                {"Départ", "05:30", "06:00", "05:30", "06:00", "Départ"},
-                {"MATIN", "07:00", "08:00", "07:00", "07:00", "08:00"},
-                {"PERIPHERIE", "11:30", "11:30", "11:30", "11:30", "11:30"},
-                {"MIDI", "13:00", "11:30", "13:00", "13:00", "13:00"},
-                {"13:00", "13:00", "13:00", "13:00", "13:00", "13:00"},
-                {"16:30", "17:00", "16:30", "16:30", "17:00", "17:30"},
-                {"SOIR", "CAMPUS", "18:30", "19:00", "19:00", "18:30"},
-                {"L19: AKODESSEWA", "L21: CAMPUS- E.U", "L22:", "L18: ADAKPAME", "L20: AVEPOZO", "DJAGBLE"},
-                {"", "B1", "B2", "B3", "B1", "B2"},
-                {"Départ", "Départ", "Départ", "Départ", "Départ", "Départ"},
-                {"Départ", "Départ", "Départ", "Départ", "Départ", "Départ"},
-                {"05:30", "06:00", "05:30", "06:00", "05:30", "06:00"},
-                {"07:00", "08:00", "07:00", "08:00", "07:00", "08:00"},
-                {"MATIN", "PERIPHERIE", "11:30", "11:30", "11:30", "11:30"},
-                {"13:00", "13:00", "13:00", "13:00", "13:00", "13:00"},
-                {"CAMPUS", "16:30", "17:00", "17:30", "16:30", "17:00"},
-                {"16:30", "17:00", "17:30", "16:30", "17:00", "16:30"},
-                {"SOIR", "18:30", "19:00", "18:30", "19:00", "18:30"},
-                {"18:30", "19:00", "18:30", "19:00", "18:30", "19:00"}
+            {"", "ADJOLOLO", "B1", "B2", "B3", "B1"},
+            {"Départ", "05:30", "06:00", "Départ", "05:30", "B1"},
+            {"Départ", "B2", "B3", "B1", "B2", "Départ"},
+            {"Départ", "05:30", "06:00", "05:30", "06:00", "Départ"},
+            {"MATIN", "07:00", "08:00", "07:00", "07:00", "08:00"},
+            {"PERIPHERIE", "11:30", "11:30", "11:30", "11:30", "11:30"},
+            {"MIDI", "13:00", "11:30", "13:00", "13:00", "13:00"},
+            {"13:00", "13:00", "13:00", "13:00", "13:00", "13:00"},
+            {"16:30", "17:00", "16:30", "16:30", "17:00", "17:30"},
+            {"SOIR", "CAMPUS", "18:30", "19:00", "19:00", "18:30"},
+            {"L19: AKODESSEWA", "L21: CAMPUS- E.U", "L22:", "L18: ADAKPAME", "L20: AVEPOZO", "DJAGBLE"},
+            {"", "B1", "B2", "B3", "B1", "B2"},
+            {"Départ", "Départ", "Départ", "Départ", "Départ", "Départ"},
+            {"Départ", "Départ", "Départ", "Départ", "Départ", "Départ"},
+            {"05:30", "06:00", "05:30", "06:00", "05:30", "06:00"},
+            {"07:00", "08:00", "07:00", "08:00", "07:00", "08:00"},
+            {"MATIN", "PERIPHERIE", "11:30", "11:30", "11:30", "11:30"},
+            {"13:00", "13:00", "13:00", "13:00", "13:00", "13:00"},
+            {"CAMPUS", "16:30", "17:00", "17:30", "16:30", "17:00"},
+            {"16:30", "17:00", "17:30", "16:30", "17:00", "16:30"},
+            {"SOIR", "18:30", "19:00", "18:30", "19:00", "18:30"},
+            {"18:30", "19:00", "18:30", "19:00", "18:30", "19:00"}
         };
 
         JTable table = new JTable(data, columnNames);
@@ -101,6 +105,7 @@ public class Emploi extends JFrame {
 
     // Custom cell renderer for specific columns
     private class CustomTableCellRenderer extends DefaultTableCellRenderer {
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

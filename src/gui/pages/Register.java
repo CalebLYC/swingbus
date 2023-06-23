@@ -4,7 +4,7 @@
  */
 package gui.pages;
 
-import entities.Poste;
+import entities.Administrateur;
 import gui.Window;
 import gui.components.AddForm;
 import java.awt.BorderLayout;
@@ -14,54 +14,45 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
-import services.implementations.PersonnelServiceImpl;
-import services.implementations.PosteServiceImpl;
-import services.interfaces.PersonnelService;
-import services.interfaces.PosteService;
-
+import services.implementations.AdminServiceImpl;
+import services.interfaces.AdminService;
 /**
  *
  * @author Caleb Lyc
  */
-public class AddPersonnel extends JFrame {
+public class Register extends JFrame {
 
-    private PersonnelService service = new PersonnelServiceImpl();
-    private PosteService posteService = new PosteServiceImpl();
-    private List<Poste> postes;
+    private AdminService service = new AdminServiceImpl();
     private JTextField nomField;
     private JTextField prenomField;
     private JSpinner dateField;
+    private JTextField usernameField;
+    private JTextField passwordField;
 
-    public AddPersonnel() throws ParseException {
-        this.setTitle("Ajouter un Personnel");
+    public Register() throws ParseException {
+        this.setTitle("S'inscrire");
+        ImageIcon icon = new ImageIcon("assets/img/busImg.jpg");
+        setIconImage(icon.getImage());
         this.setSize(600, 300);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-        postes = posteService.lister();
-
-        // Création du JComboBox pour choisir le poste correspondant
-        JComboBox<String> posteComboBox = new JComboBox<>();
-        for (Poste poste : postes) {
-            posteComboBox.addItem(poste.getLibelle());
-        }
 
         // Création du panneau pour contenir le formulaire et les JComboBox
         AddForm addForm = new AddForm();
         nomField = addForm.addFormField("Nom");
         prenomField = addForm.addFormField("Prénom");
         dateField = addForm.createDatePicker("Date de naissance");
-        addForm.addFormField("Poste", posteComboBox);
+        usernameField = addForm.addFormField("Nom d'utilisateur");
+        passwordField = addForm.addFormField("Mot de passe");
 
         JButton addButton = new JButton("Ajouter");
         addButton.setFont(new Font("Arial", Font.BOLD, 14));
@@ -80,26 +71,24 @@ public class AddPersonnel extends JFrame {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String poste = (String) posteComboBox.getSelectedItem();
                 String nom = nomField.getText();
                 String prenom = prenomField.getText();
                 Date dateNaissance = (Date) dateField.getValue();
-                System.out.println(dateNaissance);
+                String username = usernameField.getText();
+                String password = passwordField.getText();
 
-                if (validateInputs(poste, nom, prenom, dateNaissance)) {
-                    Poste posteV = posteService.trouver(poste);
-                    entities.Personnel personnel = new entities.Personnel(nom, prenom, dateNaissance, posteV);
+                if (validateInputs(nom, prenom, dateNaissance, username, password)) {
                     try {
-                        service.ajouter(personnel);
-                        String message = "Nouveau menbre du personnel: "
-                                + nom + " "
-                                + prenom + " "
-                                + "ajouté avec succès";
-                        JOptionPane.showMessageDialog(AddPersonnel.this, message, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                        Administrateur admin = new Administrateur(nom, prenom, dateNaissance, username, password);
+                        service.ajouter(admin);
+                        String message = "Inscription effectuée avec succès\n Nom: "
+                                + nom + " \nPrénom: "
+                                + prenom + " ";
+                        JOptionPane.showMessageDialog(Register.this, message, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                         Window.getInstance().changePage(Personnel.pageId);
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(AddPersonnel.this, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(Register.this, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -113,9 +102,9 @@ public class AddPersonnel extends JFrame {
         });
     }
 
-    private boolean validateInputs(String poste, String nom, String prenom, Date dateNaissance) {
-        if (poste.isEmpty() || nom.isEmpty() || prenom.isEmpty() || dateNaissance == null) {
-            JOptionPane.showMessageDialog(AddPersonnel.this, "Veuillez remplir correctement tous les champs.", "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+    private boolean validateInputs(String nom, String prenom, Date date, String username, String password) {
+        if (nom.isEmpty() || prenom.isEmpty() || username.isEmpty() || password.isEmpty() || date == null) {
+            JOptionPane.showMessageDialog(Register.this, "Veuillez remplir correctement tous les champs.", "Erreur de validation", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 

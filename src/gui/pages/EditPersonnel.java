@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ import services.interfaces.PosteService;
  * @author Caleb Lyc
  */
 public class EditPersonnel extends JFrame {
+
     private entities.Personnel personnelToEdit;
     private PersonnelService service = new PersonnelServiceImpl();
     private PosteService posteService = new PosteServiceImpl();
@@ -40,20 +42,22 @@ public class EditPersonnel extends JFrame {
     private JTextField nomField;
     private JTextField prenomField;
     private JSpinner dateField;
-    
+
     public EditPersonnel(entities.Personnel perso) throws ParseException {
         personnelToEdit = perso;
         this.setTitle("Ajouter un Personnel");
+        ImageIcon icon = new ImageIcon("assets/img/busImg.jpg");
+        setIconImage(icon.getImage());
         this.setSize(600, 300);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
+
         postes = posteService.lister();
 
         // Création du JComboBox pour choisir le poste correspondant
         JComboBox<String> posteComboBox = new JComboBox<>();
-        for(Poste poste: postes){
+        for (Poste poste : postes) {
             posteComboBox.addItem(poste.getLibelle());
         }
 
@@ -88,22 +92,22 @@ public class EditPersonnel extends JFrame {
                 String poste = (String) posteComboBox.getSelectedItem();
                 String nom = nomField.getText();
                 String prenom = prenomField.getText();
-                Date dateNaissance = (Date)dateField.getValue();
+                Date dateNaissance = (Date) dateField.getValue();
                 System.out.println(dateNaissance);
-                
+
                 if (validateInputs(poste, nom, prenom, dateNaissance)) {
                     Poste posteV = posteService.trouver(poste);
                     entities.Personnel personnel = new entities.Personnel(personnelToEdit.getId(), nom, prenom, dateNaissance, posteV);
-                    try{
+                    try {
                         service.modifier(personnel);
                         String message = "Membre du personnel: "
-                            + nom + " "
-                            + prenom + " "
-                            + "modifié avec succès";
+                                + nom + " "
+                                + prenom + " "
+                                + "modifié avec succès";
                         JOptionPane.showMessageDialog(EditPersonnel.this, message, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                         Window.getInstance().changePage(Personnel.pageId);
-                    }catch(Exception ex){
+                    } catch (Exception ex) {
                         JOptionPane.showMessageDialog(EditPersonnel.this, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -119,13 +123,11 @@ public class EditPersonnel extends JFrame {
     }
 
     private boolean validateInputs(String poste, String nom, String prenom, Date dateNaissance) {
-    if (poste.isEmpty() || nom.isEmpty() || prenom.isEmpty() || dateNaissance == null) {
-        JOptionPane.showMessageDialog(EditPersonnel.this, "Veuillez remplir correctement tous les champs.", "Erreur de validation", JOptionPane.ERROR_MESSAGE);
-        return false;
+        if (poste.isEmpty() || nom.isEmpty() || prenom.isEmpty() || dateNaissance == null) {
+            JOptionPane.showMessageDialog(EditPersonnel.this, "Veuillez remplir correctement tous les champs.", "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
-
-    return true;
 }
-}
-
-

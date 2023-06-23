@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.time.DateTimeException;
 import java.time.Year;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -38,6 +39,8 @@ public class EditBus extends JFrame {
         busToEdit = bus;
         setTitle("Modifier un Bus");
         setSize(600, 300);
+        ImageIcon icon = new ImageIcon("assets/img/busImg.jpg");
+        setIconImage(icon.getImage());
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
