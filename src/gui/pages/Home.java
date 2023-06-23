@@ -38,10 +38,10 @@ public class Home extends Page {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new java.awt.Insets(20, 20, 20, 20);
 
-        JPanel card1 = createCardPanel("Nombre de lignes", ligneNumber.toString(), Color.decode("#1ABC9C"), "path/to/graph1.png");
-        JPanel card2 = createCardPanel("Nombre de bus", busNumber.toString(), Color.decode("#E67E22"), "path/to/graph2.png");
-        JPanel card3 = createCardPanel("Membres du personnel", condNumber.toString(), Color.decode("#3498DB"), "path/to/graph3.png");
-        JPanel card4 = createCardPanel("Nombre moyen de passagers", "125", Color.decode("#9B59B6"), "path/to/graph4.png");
+        JPanel card1 = createCardPanel("Nombre de lignes", ligneNumber.toString(), Color.decode("#1ABC9C"), "assets/img/ligne.png");
+        JPanel card2 = createCardPanel("Nombre de bus", busNumber.toString(), Color.decode("#E67E22"), "assets/img/bus.png");
+        JPanel card3 = createCardPanel("Membres du personnel", condNumber.toString(), Color.decode("#3498DB"), "assets/img/group.png");
+        JPanel card4 = createCardPanel("Nombre moyen de passagers", "125", Color.decode("#9B59B6"), "assets/img/person.png");
 
         gbc.gridx = 0;
         gbc.gridy = 0;

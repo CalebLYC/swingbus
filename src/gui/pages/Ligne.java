@@ -14,22 +14,23 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import javax.swing.JFrame;
+import services.implementations.LigneServiceImpl;
+import services.interfaces.LigneService;
 
 public class Ligne extends Page {
     public static int pageid = 8;
-    
+    private int id;
+    private entities.Ligne ligne;
+    private LigneService service = new LigneServiceImpl();   
     private String ligneName;
-    private List<String> busList;
-    private List<String> personnelList;
 
-    public Ligne(String ligneName, List<String> busList, List<String> personnelList) {
-        this.ligneName = ligneName;
-        this.busList = busList;
-        this.personnelList = personnelList;
+    public Ligne(int id) {
+        this.id = id;
+        
+        ligne = service.trouver(id);
+        ligneName = ligne.getNom();
 
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -60,10 +61,6 @@ public class Ligne extends Page {
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel.setBorder(BorderFactory.createTitledBorder("Bus"));
 
-        for (String bus : busList) {
-            JPanel busCard = createCard(bus);
-            panel.add(busCard);
-        }
 
         return panel;
     }
@@ -72,11 +69,6 @@ public class Ligne extends Page {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel.setBorder(BorderFactory.createTitledBorder("Personnel"));
-
-        for (String personnel : personnelList) {
-            JPanel personnelCard = createCard(personnel);
-            panel.add(personnelCard);
-        }
 
         return panel;
     }
@@ -111,7 +103,6 @@ public class Ligne extends Page {
 
                 JFrame frame = new JFrame("Ligne");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().add(new Ligne("Ligne 1", busList, personnelList));
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);

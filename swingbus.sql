@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2023 at 04:52 AM
+-- Generation Time: Jun 23, 2023 at 12:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -76,7 +76,8 @@ INSERT INTO `lignes` (`numero`, `depart`, `destination`, `distance`, `nom`) VALU
 (13, 'Campus UL', 'Adétikopé', 22, 'Adétikopé'),
 (15, 'Campus UL', 'Entreprise de l\'Union', 8, 'Entreprise de l\'Union'),
 (16, 'Campus UL', 'Atigangomé', 10, 'Atigangomé'),
-(18, 'Campus UL', 'Adidogomé', 15, 'Adidogomé');
+(18, 'Campus UL', 'Adidogomé', 15, 'Adidogomé'),
+(19, 'Campus UL', 'Baguida', 30, 'Baguida');
 
 -- --------------------------------------------------------
 
@@ -159,9 +160,11 @@ INSERT INTO `voyages` (`id`, `date_heure`, `nombre_passagers`, `vers_peripherie`
 (12, '2023-06-23 01:46:58.344000', NULL, b'1', 7, 15),
 (13, '2023-06-23 01:47:35.181000', NULL, b'0', 8, 16),
 (14, '2023-06-23 01:47:54.928000', NULL, b'0', 4, 10),
-(15, '2023-06-23 01:47:59.460000', NULL, b'1', 6, 13),
 (16, '2023-06-23 01:48:21.182000', NULL, b'1', 9, 18),
-(17, '2023-06-23 01:49:23.561000', NULL, b'0', 7, 15);
+(17, '2023-06-23 01:49:23.561000', NULL, b'0', 7, 15),
+(19, '2023-06-23 01:49:23.561000', 17, b'1', 4, 10),
+(21, '2023-06-23 01:47:59.460000', 20, b'1', 4, 10),
+(24, '2023-06-23 01:47:59.460000', 21, b'0', 4, 10);
 
 -- --------------------------------------------------------
 
@@ -184,9 +187,11 @@ INSERT INTO `voyages_personnel` (`voyage_id`, `personnel_id`) VALUES
 (12, 12),
 (13, 13),
 (14, 6),
-(15, 11),
 (16, 14),
-(17, 12);
+(17, 12),
+(19, 6),
+(21, 6),
+(24, 6);
 
 --
 -- Indexes for dumped tables
@@ -262,7 +267,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `voyages`
 --
 ALTER TABLE `voyages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables

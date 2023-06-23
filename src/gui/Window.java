@@ -101,6 +101,22 @@ public class Window extends JFrame {
 
         revalidate();
     }
+    
+     private void buildPage(int id) {
+        contentPanel.removeAll();
+
+        switch (currentPage) {
+             case 8:
+                contentPanel.add(new Ligne(id), BorderLayout.CENTER);
+                setTitle("Ligne " + id);
+                break;
+            default:
+                contentPanel.add(new Home(), BorderLayout.CENTER);
+                setTitle("Tableau de bord");
+        }
+
+        revalidate();
+    }
 
     public int getCurrentPage() {
         return currentPage;
@@ -113,6 +129,12 @@ public class Window extends JFrame {
     public void changePage(int page) {
         setCurrentPage(page);
         buildPage();
+    }
+    
+    public void changePage(int page, int id) {
+        System.out.println(id);
+        setCurrentPage(page);
+        buildPage(id);
     }
 
     public void setTitleAndRefresh(String title) {

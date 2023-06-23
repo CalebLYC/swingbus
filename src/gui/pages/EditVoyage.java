@@ -97,7 +97,7 @@ public class EditVoyage extends JFrame {
         }
         dateSpinner = addform.createDateTimePicker("Date et heure de départ");
         dateSpinner.setValue(voyageToEdit.getDate());
-        versField = addform.addFormField("Direction", new JComboBox());
+        versField = addform.addFormField("Sens", new JComboBox());
         versField.addItem("Voyage vers le campus");
         versField.addItem("Voyage vers la périphérie");
         if (voyageToEdit.isVersPeripherie()) {

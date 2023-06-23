@@ -6,6 +6,7 @@ package gui.components;
 
 import gui.Window;
 import gui.pages.EditLigne;
+import gui.pages.Ligne;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -16,16 +17,11 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import gui.pages.Ligne;
 import gui.pages.Lignes;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.List;
 import services.implementations.LigneServiceImpl;
 import services.interfaces.LigneService;
@@ -122,8 +118,7 @@ public class LignesTable extends JPanel {
         voirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                //Window.getInstance().getContentPane().add(new Ligne("Ligne1" + numeroLabel, busList, personnelList), BorderLayout.CENTER);
+                Window.getInstance().changePage(Ligne.pageId ,ligne.getNumero());
                 Window.getInstance().setTitle("Ligne" + ligne.getNumero());
             }
         });
